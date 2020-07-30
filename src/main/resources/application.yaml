@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://cloud.idevelopment.hu:3306/mordor_js?serverTimezone=UTC&useSSL=false&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/mordor_js?serverTimezone=UTC&useSSL=false&characterEncoding=utf8
     username: test
     password: test
     driver-class-name: com.mysql.cj.jdbc.Driver
