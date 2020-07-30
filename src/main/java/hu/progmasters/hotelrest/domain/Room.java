@@ -1,6 +1,7 @@
 package hu.progmasters.hotelrest.domain;
 
 import com.sun.istack.NotNull;
+import hu.progmasters.hotelrest.domain.dto.room.RoomFormCommand;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -25,7 +26,7 @@ public class Room {
     private Integer number;
 
     @Column(name = "is_reserver")
-    private Boolean isReserver = false;
+    private Boolean isReserved = false;
 
     @Min(0)
     @Column(name = "price")
@@ -35,6 +36,16 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
+
+    public Room() {
+    }
+
+    public Room(Hotel hotel, RoomFormCommand roomFormCommand) {
+        this.hotel = hotel;
+        this.number = roomFormCommand.getNumber();
+        this.price = roomFormCommand.getPrice();
+        this.size = roomFormCommand.getSize();
+    }
 
     public Long getId() {
         return id;
@@ -60,12 +71,12 @@ public class Room {
         this.number = number;
     }
 
-    public Boolean getReserver() {
-        return isReserver;
+    public Boolean getReserved() {
+        return isReserved;
     }
 
-    public void setReserver(Boolean reserver) {
-        isReserver = reserver;
+    public void setReserved(Boolean reserved) {
+        isReserved = reserved;
     }
 
     public Double getPrice() {

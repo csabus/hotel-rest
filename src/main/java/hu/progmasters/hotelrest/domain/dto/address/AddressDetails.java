@@ -1,27 +1,18 @@
-package hu.progmasters.hotelrest.domain;
+package hu.progmasters.hotelrest.domain.dto.address;
 
-import hu.progmasters.hotelrest.domain.dto.address.AddressFormCommand;
+import hu.progmasters.hotelrest.domain.Address;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
-@Embeddable
-public class Address {
-    @Column(name = "city")
+public class AddressDetails {
     private String city;
-
-    @Column(name = "zipCode")
     private String zipCode;
-
-    @Column(name = "street")
     private String street;
 
-    public Address() {
+    public AddressDetails() {
     }
 
-    public Address(AddressFormCommand address) {
+    public AddressDetails(Address address) {
         this.city = address.getCity();
-        this.zipCode = address.getCity();
+        this.zipCode = address.getZipCode();
         this.street = address.getStreet();
     }
 

@@ -1,16 +1,22 @@
 package hu.progmasters.hotelrest.service;
 
 import hu.progmasters.hotelrest.domain.Hotel;
-import hu.progmasters.hotelrest.domain.dto.HotelListItem;
+import hu.progmasters.hotelrest.domain.dto.hotel.HotelDetails;
+import hu.progmasters.hotelrest.domain.dto.hotel.HotelFormCommand;
+import hu.progmasters.hotelrest.domain.dto.hotel.HotelListItem;
 import hu.progmasters.hotelrest.repository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Service
+@Transactional
 public class HotelService {
     private HotelRepository hotelRepository;
 
@@ -32,5 +38,20 @@ public class HotelService {
                 .stream()
                 .map(HotelListItem::new)
                 .collect(Collectors.toList());
+    }
+
+    public void create(HotelFormCommand hotelFormCommand) {
+        Hotel hotel = new Hotel(hotelFormCommand);
+        hotelRepository.save(hotel);
+    }
+
+    public Hotel findById(Long hotelId) {
+        return hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new EntityNotFoundException("Cannot find hotel with id: " + hotelId));
+    }
+
+    public HotelDetails findDetailsById(Long id) {
+        Hotel hotel = findById(id);
+        return new HotelDetails(hotel);
     }
 }
